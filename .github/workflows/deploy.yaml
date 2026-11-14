@@ -20,7 +20,7 @@ jobs:
     environment:
       name: production
       url:
-        ${{ steps.deployent.outputs.page_url }}
+        ${{ steps.deploy.outputs.page_url }}
     steps:
       - name: Check out repository
         uses: actions/checkout@v7
@@ -37,5 +37,5 @@ jobs:
           path: dist
 
       - name: Deploy
-        id: deployment
+        id: deploy
         uses: actions/deploy-pages@v5
