@@ -196,6 +196,17 @@ export const UPGRADES = [
     },
   },
   {
+    id: 'thrust',
+    icon: '↑',
+    name: 'Extra zest tank',
+    tag: 'THRUSTER',
+    description: 'Carry 25% more jet fuel. Stay airborne longer.',
+    apply: (p) => {
+      p.maxFuel *= 1.25;
+      p.fuel = p.maxFuel;
+    },
+  },
+  {
     id: 'hull',
     icon: '♡',
     name: 'Thicker rind',

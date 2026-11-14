@@ -635,8 +635,10 @@ function hud() {
   $('jump-status').textContent = p.inWater
     ? 'HOLD TO SWIM'
     : game.thrustAvailable
-      ? `FUEL ${Math.round((p.fuel / 1.4) * 100)}%`
-      : 'THRUSTER WET';
+      ? `FUEL ${Math.round((p.fuel / p.maxFuel) * 100)}%`
+      : game.level.thrusterWet
+        ? 'THRUSTER WET'
+        : 'THRUSTER OFFLINE';
   $('route-progress-fill').style.width = `${(100 * p.x) / game.level.width}%`;
   const boss = game.enemies.find((e) => e.type === 'boss');
   show('boss-hud', !!boss);

@@ -68,6 +68,8 @@ const LEVELS = [
   },
   {
     width: 4700,
+    thrustDisabled: true,
+    arrivalMessage: 'thruster offline in this level',
     start: { x: 100, y: 594 },
     exit: { x: 4550, y: 576 },
     platforms: [

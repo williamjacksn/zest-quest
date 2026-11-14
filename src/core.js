@@ -57,6 +57,7 @@ export class Game {
       coyote: 0.12,
       jumpBuffer: 0,
       fuel: 1.4,
+      maxFuel: 1.4,
       bounceBoost: 0,
       boostX: 0,
       drop: 0,
@@ -100,7 +101,7 @@ export class Game {
       jumpBuffer: 0,
       drop: 0,
       onPlatform: 0,
-      fuel: 1.4,
+      fuel: p.maxFuel,
       bounceBoost: 0,
       boostX: 0,
     });
@@ -109,7 +110,7 @@ export class Game {
     this.emit('world', WORLDS[this.world]);
   }
   get thrustAvailable() {
-    return !this.level.thrusterWet;
+    return !this.level.thrustDisabled && !this.level.thrusterWet;
   }
   beginLanding() {
     if (this.world !== 0 || this.state !== 'playing' || this.time > 0 || this.landingPlayed)
@@ -210,7 +211,7 @@ export class Game {
       airJumps: 1,
       grounded: false,
       onPlatform: null,
-      fuel: 1.4,
+      fuel: p.maxFuel,
       bounceBoost: 0,
       boostX: 0,
     });
@@ -407,7 +408,7 @@ export class Game {
       grounded: false,
       onPlatform: null,
       airJumps: 1,
-      fuel: 1.4,
+      fuel: p.maxFuel,
       bounceBoost: 0.8,
     });
     this.ring(p.x, platform.y, WORLDS[this.world].color, 90);
@@ -425,7 +426,7 @@ export class Game {
     if (p.grounded) {
       p.coyote = 0.11;
       p.airJumps = 1;
-      p.fuel = Math.min(1.4, p.fuel + dt * 2.8);
+      p.fuel = Math.min(p.maxFuel, p.fuel + dt * 2.8);
       p.boostX = 0;
     } else p.coyote = Math.max(0, p.coyote - dt);
     p.jumpBuffer = Math.max(0, p.jumpBuffer - dt);

@@ -398,7 +398,7 @@ export class Renderer {
     }
     if (!landing && !p.inWater && game.thrustAvailable) {
       this.box(p.x - 22, p.y + 41, 44, 3, '#ffffff22', 1);
-      this.box(p.x - 22, p.y + 41, (44 * p.fuel) / 1.4, 3, '#ffd18b', 1);
+      this.box(p.x - 22, p.y + 41, (44 * p.fuel) / p.maxFuel, 3, '#ffd18b', 1);
     }
     for (const r of game.rings) {
       c.globalAlpha = r.life / r.max;

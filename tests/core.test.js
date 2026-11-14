@@ -283,9 +283,9 @@ test('underwater controls swim and currents push without directional input', () 
   assert.equal(g.player.fuel, 1.4, 'the wet thruster also stays disabled on dry ground');
 });
 
-test('thrust works on every dry planet, consumes fuel, caps ascent, and recharges on landing', () => {
+test('thrust works where permitted, consumes fuel, caps ascent, and recharges on landing', () => {
   for (let world = 0; world < WORLDS.length; world++) {
-    if (world === 6) continue;
+    if (world === 1 || world === 6) continue;
     const g = fixture(world);
     assert.ok(g.thrustAvailable);
     g.step(1 / 60, { jump: true, jumpHeld: true });
@@ -306,39 +306,46 @@ test('thrust works on every dry planet, consumes fuel, caps ascent, and recharge
   }
 });
 
-test('Vitamin Sea disables the wet thruster through recovery and retries; the next planet restores it', () => {
-  const g = fixture(6),
-    wet = 'your thruster got wet, it no longer works',
-    dry = 'your thruster dried off!';
-  assert.equal(g.thrustAvailable, false);
-  assert.equal(g.level.arrivalMessage, wet);
-  assert.equal(g.level.signs.filter((sign) => sign.text === wet).length, 1);
-  assert.ok(g.level.signs.find((sign) => sign.text === wet).x < 200);
-  Object.assign(g.player, { y: 400, vy: 0, grounded: false, onPlatform: null });
-  g.step(0.05, { jumpHeld: true });
-  assert.ok(g.player.vy > 0, 'holding jump cannot activate thrust on dry ground in Vitamin Sea');
-  assert.equal(g.player.fuel, 1.4);
-  g.respawn();
-  assert.equal(g.thrustAvailable, false);
-  g.state = 'lost';
-  assert.ok(g.retryWorld());
-  assert.equal(g.thrustAvailable, false);
-  assert.equal(g.level.arrivalMessage, wet);
-  g.shipReady = true;
-  g.completeWorld();
-  g.player.x = SHIP_STATIONS[0].x;
-  g.chooseUpgrade('rapid');
-  g.player.x = CABIN.airlock;
-  assert.ok(g.interactShip());
-  assert.ok(g.landNextWorld());
-  assert.equal(g.world, 7);
-  assert.equal(g.thrustAvailable, true);
-  assert.equal(g.level.arrivalMessage, dry);
-  assert.equal(g.level.signs.filter((sign) => sign.text === dry).length, 1);
-  assert.ok(g.level.signs.find((sign) => sign.text === dry).x < 200);
-  g.step(1 / 60, { jump: true, jumpHeld: true });
-  frames(g, 20, { jumpHeld: true });
-  assert.ok(g.player.fuel < 1.4, 'the dried thruster works in Orange You Glad');
+test('levels two and seven disable thrust through recovery and retries; the next planet restores it', () => {
+  for (const world of [1, 6]) {
+    const g = fixture(world),
+      message =
+        world === 1
+          ? 'thruster offline in this level'
+          : 'your thruster got wet, it no longer works';
+    assert.equal(g.thrustAvailable, false);
+    assert.equal(g.level.arrivalMessage, message);
+    assert.equal(g.level.signs.filter((sign) => sign.text === message).length, 1);
+    assert.ok(g.level.signs.find((sign) => sign.text === message).x < 200);
+    Object.assign(g.player, { y: 400, vy: 0, grounded: false, onPlatform: null });
+    g.step(0.05, { jumpHeld: true });
+    assert.ok(g.player.vy > 0, `thrust stays disabled in ${WORLDS[world].name}`);
+    assert.equal(g.player.fuel, 1.4);
+    g.respawn();
+    assert.equal(g.thrustAvailable, false);
+    g.state = 'lost';
+    assert.ok(g.retryWorld());
+    assert.equal(g.thrustAvailable, false);
+    assert.equal(g.level.arrivalMessage, message);
+    g.shipReady = true;
+    g.completeWorld();
+    g.player.x = SHIP_STATIONS[0].x;
+    g.chooseUpgrade('rapid');
+    g.player.x = CABIN.airlock;
+    assert.ok(g.interactShip());
+    assert.ok(g.landNextWorld());
+    assert.equal(g.world, world + 1);
+    assert.equal(g.thrustAvailable, true);
+    if (world === 6) {
+      const dry = 'your thruster dried off!';
+      assert.equal(g.level.arrivalMessage, dry);
+      assert.equal(g.level.signs.filter((sign) => sign.text === dry).length, 1);
+      assert.ok(g.level.signs.find((sign) => sign.text === dry).x < 200);
+    }
+    g.step(1 / 60, { jump: true, jumpHeld: true });
+    frames(g, 20, { jumpHeld: true });
+    assert.ok(g.player.fuel < 1.4, `thrust works again in ${WORLDS[g.world].name}`);
+  }
 });
 
 test('conveyors carry a standing player and retain momentum during a jump', () => {

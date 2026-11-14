@@ -534,6 +534,32 @@ export class PixelArt {
           p.rect(x + 6, 46, 4, 8, '#e9f3c4');
         }
         p.rect(7, 59, 50, 4, metal);
+      } else if (kind === 'thrust') {
+        p.rect(8, 54, 48, 8, dark);
+        p.rect(10, 13, 9, 43, outline);
+        p.rect(12, 15, 5, 39, metal);
+        p.rect(16, 10, 35, 7, light);
+        p.rect(26, 3, 17, 8, outline);
+        p.rect(29, 5, 11, 5, metal);
+        p.rect(23, 16, 25, 33, outline);
+        p.rect(26, 18, 19, 28, '#d4a16a');
+        p.rect(28, 19, 4, 24, '#ffe4a6');
+        p.rect(26, 24, 19, 4, metal);
+        p.rect(26, 38, 19, 4, metal);
+        p.rect(32, 29, 9, 7, '#173145');
+        p.rect(34, 31, 5, 3, '#c2e88e');
+        p.rect(27, 48, 17, 7, metal);
+        p.poly(
+          [
+            [29, 55],
+            [35, 63],
+            [41, 55],
+          ],
+          '#ffd18b',
+        );
+        p.rect(33, 55, 4, 4, '#fff1c1');
+        p.rect(48, 22, 6, 4, '#8ddcd9');
+        p.rect(51, 26, 3, 25, '#8ddcd9');
       } else if (kind === 'hull') {
         p.poly(
           [

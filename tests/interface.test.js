@@ -323,16 +323,21 @@ test('stage tracks survive boss events and jukebox browsing; every cabin plays O
     const game = window.__zest.game;
     assert.equal(game.world, world);
     assert.equal(window.__zest.audio.index, world + 1);
-    if (world === 6 || world === 7) {
+    if ([1, 6, 7].includes(world)) {
       assert.ok(visible('toast'));
       assert.equal(
         $('toast').textContent,
-        world === 6 ? 'your thruster got wet, it no longer works' : 'your thruster dried off!',
+        world === 1
+          ? 'thruster offline in this level'
+          : world === 6
+            ? 'your thruster got wet, it no longer works'
+            : 'your thruster dried off!',
       );
-      frames(6);
-      if (world === 6) assert.equal($('jump-status').textContent, 'THRUSTER WET');
-      else assert.match($('jump-status').textContent, /^FUEL \d+%$/);
     }
+    frames(6);
+    if (world === 1) assert.equal($('jump-status').textContent, 'THRUSTER OFFLINE');
+    else if (world === 6) assert.equal($('jump-status').textContent, 'THRUSTER WET');
+    else assert.match($('jump-status').textContent, /^FUEL \d+%$/);
     window.__zest.event('boss');
     assert.equal(window.__zest.audio.index, world + 1);
     $('soundtrack-button').click();

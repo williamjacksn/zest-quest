@@ -16,24 +16,24 @@ Open **http://127.0.0.1:4173** in a modern browser. Serve over HTTP rather than 
 
 The first level opens with Vessy’s ship landing on Planet Grapefruit, its hatch opening, and Vessy walking out. Gameplay and the expedition timer begin after the cutscene. Use **Skip intro**, Space, or Enter to start immediately. Pause and soundtrack browsing also pause the cutscene. Later worlds and stage retries start directly in gameplay.
 
-| Control           | Action                                                                    |
-| ----------------- | ------------------------------------------------------------------------- |
-| A/D or left/right | Run                                                                       |
-| Space, W, or up   | Jump; press again for one air jump                                        |
-| Hold jump         | Jet thrust except in Vitamin Sea; land to refill fuel; swim up underwater |
-| Shift or X        | Air dash, with brief immunity                                             |
-| S or down         | Drop through a raised ledge                                               |
-| E                 | Pulse nearby enemies; interact with objects and the Airlock aboard ship   |
-| Hold left mouse   | Aim manually; auto-aim resumes on release                                 |
-| Esc / P           | Pause                                                                     |
-| M                 | Mute / unmute                                                             |
-| Touch             | Horizontal joystick plus jump, dash, and pulse buttons                    |
+| Control           | Action                                                                       |
+| ----------------- | ---------------------------------------------------------------------------- |
+| A/D or left/right | Run                                                                          |
+| Space, W, or up   | Jump; press again for one air jump                                           |
+| Hold jump         | Jet thrust except in levels 2 and 7; land to refill fuel; swim up underwater |
+| Shift or X        | Air dash, with brief immunity                                                |
+| S or down         | Drop through a raised ledge                                                  |
+| E                 | Pulse nearby enemies; interact with objects and the Airlock aboard ship      |
+| Hold left mouse   | Aim manually; auto-aim resumes on release                                    |
+| Esc / P           | Pause                                                                        |
+| M                 | Mute / unmute                                                                |
+| Touch             | Horizontal joystick plus jump, dash, and pulse buttons                       |
 
 Each world now includes two additional themed chapters, adding 3,200 world units of terrain (57–71% longer than the original routes). There are **45 cores across the campaign**. Collect **five glowing seed cores** in each world, then board the ship at the far right. Cores collect on touch, so you keep moving. Smaller zest trails mark jump routes and recharge the pulse. Land on enemies to stomp them; the blaster also fires automatically.
 
-Vitamin Sea starts with “your thruster got wet, it no longer works.” Thrust stays disabled throughout that level, including dry ground and retries; swimming, jumping, and dashing still work. Orange You Glad starts with “your thruster dried off!” and restores thrust automatically.
+Thrust is disabled throughout level two, The Vessy Works, and returns in Citric Propulsion. Vitamin Sea starts with “your thruster got wet, it no longer works.” Thrust stays disabled throughout that level too, including dry ground and retries; swimming, jumping, and dashing still work. Orange You Glad starts with “your thruster dried off!” and restores thrust automatically.
 
-Beacons save your position and repair some hull. Falling costs 14 hull (7 in Gentle mode), then returns you to the last beacon without losing collected cores. If hull reaches zero, retry **the current world**, keeping upgrades and completed worlds. Between stages, walk around Vessy’s ship and inspect its six upgrade objects with **E**. Each object opens a card to install its corresponding upgrade or keep exploring. Choose one upgrade per stop, then follow the yellow arrows to the **Airlock** and press **E** to travel to the next planet. Touch players use the joystick and **USE / E** button. The expedition timer pauses aboard ship. Progress lasts for the current session; volume preferences, Gentle mode, reduced motion, and the best score are saved on this device.
+Beacons save your position and repair some hull. Falling costs 14 hull (7 in Gentle mode), then returns you to the last beacon without losing collected cores. If hull reaches zero, retry **the current world**, keeping upgrades and completed worlds. Between stages, walk around Vessy’s ship and inspect its seven upgrade objects with **E**. The **Thruster station** offers **Extra zest tank**, adding 25% fuel capacity per installation; the **Dash bench** upgrades dash recharge. Each object opens a card to install its corresponding upgrade or keep exploring. Choose one upgrade per stop, then follow the yellow arrows to the **Airlock** and press **E** to travel to the next planet. Touch players use the joystick and **USE / E** button. The expedition timer pauses aboard ship. Progress lasts for the current session; volume preferences, Gentle mode, reduced motion, and the best score are saved on this device.
 
 ## Every track has a home
 
@@ -81,12 +81,12 @@ npm run routes
 npm run analyze
 ```
 
-- `npm test`: 39 mechanics, terrain, audio, cutscene, ship interaction, and offline interface checks, including all nine stage/menu track assignments and the wet/dry thruster transition.
+- `npm test`: 40 mechanics, terrain, audio, cutscene, ship interaction, and offline interface checks, including all nine stage/menu track assignments, thruster upgrades, and no-thruster levels.
 - `npm run render`: generates canvas-only scenes for the ship interior, first landing, and every world at desktop, phone, and short landscape dimensions in `docs/previews/`.
 - `npm run routes`: checks surface connectivity with the actual jump/dash movement code. Timed/moving platforms are held at their authored positions, combat and damage are excluded, and underwater links assume continuous swimming. Separate tests exercise terrain cycles, swimming, and damage. This is a geometry/reachability check, not a full playthrough.
 - `npm run analyze`: decodes the unchanged original recordings and regenerates `docs/soundtrack-analysis.json`.
 
-All 39 automated checks pass and the static build succeeds. Representative canvas scenes, including the first landing and ship interior, were visually inspected. Managed browser policy blocked the local preview; live browser layout, audible playback, and physical touch input remain unverified. Offline interface tests use an audio stub.
+All 40 automated checks pass and the static build succeeds. Representative canvas scenes, including the first landing and ship interior, were visually inspected. Managed browser policy blocked the local preview; live browser layout, audible playback, and physical touch input remain unverified. Offline interface tests use an audio stub.
 
 ## Source map
 
@@ -95,7 +95,7 @@ All 39 automated checks pass and the static build succeeds. Representative canva
 | `src/levels.js`        | Nine authored platform routes, cores, checkpoints, enemy placements, and environmental set pieces |
 | `src/core.js`          | Platform physics, terrain cycles, combat, collection, recovery, and progression                   |
 | `src/renderer.js`      | Layered side-view scenery, characters, level artwork, effects, and route map                      |
-| `src/ship.js`          | Interior layout and the six upgrade stations                                                      |
+| `src/ship.js`          | Interior layout and the seven upgrade stations                                                    |
 | `src/ship-renderer.js` | Ship workshop, upgrade objects, yellow guidance arrows, and Airlock artwork                       |
 | `src/pixel-art.js`     | Original pixel sprites, material textures, scenery tiles, bitmap lettering, and asset caching     |
 | `src/game.js`          | Keyboard/touch input, HUD, dialogs, music routing, and preferences                                |

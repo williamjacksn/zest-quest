@@ -68,6 +68,8 @@ test('each upgrade belongs to an object, requires proximity, and installs immedi
       'hp',
       'magnet',
       'healBonus',
+      'fuel',
+      'maxFuel',
     ])
       assert.equal(game.player[stat], expected[stat]);
     assert.equal(game.state, 'ship');
@@ -105,4 +107,49 @@ test('the airlock requires an upgrade, departs only nearby, and advances exactly
   game.player.x = SHIP_STATIONS[1].x;
   assert.ok(game.chooseUpgrade('spread'));
   assert.deepEqual(game.upgrades, ['rapid', 'spread']);
+});
+
+test('the thruster station increases flight time and preserves its tank through travel, wet levels, falls, and retries', () => {
+  const game = board(5),
+    station = SHIP_STATIONS.find((item) => item.upgrade === 'thrust'),
+    capacity = game.player.maxFuel,
+    dashMax = game.player.dashMax;
+  game.player.x = station.x;
+  assert.ok(game.interactShip());
+  assert.ok(game.chooseUpgrade('thrust'));
+  assert.equal(game.player.maxFuel, capacity * 1.25);
+  assert.equal(game.player.fuel, game.player.maxFuel);
+  assert.equal(game.player.dashMax, dashMax);
+  game.player.x = CABIN.airlock;
+  game.interactShip();
+  game.landNextWorld();
+  assert.equal(game.world, 6);
+  assert.equal(game.thrustAvailable, false);
+  game.step(0.05, { jump: true, jumpHeld: true });
+  assert.equal(
+    game.player.fuel,
+    capacity * 1.25,
+    'the upgrade does not bypass the wet-thruster rule',
+  );
+  game.player.fuel = 0;
+  game.respawn();
+  assert.equal(game.player.fuel, game.player.maxFuel);
+  game.player.invincible = 0;
+  game.damagePlayer(9999);
+  assert.ok(game.retryWorld());
+  assert.equal(game.player.maxFuel, capacity * 1.25);
+  assert.equal(game.player.fuel, game.player.maxFuel);
+  game.shipReady = true;
+  game.completeWorld();
+  game.player.x = SHIP_STATIONS[0].x;
+  game.chooseUpgrade('rapid');
+  game.player.x = CABIN.airlock;
+  game.interactShip();
+  game.landNextWorld();
+  assert.equal(game.world, 7);
+  assert.equal(game.thrustAvailable, true);
+  game.step(1 / 60, { jump: true, jumpHeld: true });
+  for (let frame = 0; frame < 90; frame++) game.step(1 / 60, { jumpHeld: true });
+  assert.ok(game.player.fuel > 0, 'the larger tank lasts longer than the base 1.4-second supply');
+  assert.ok(game.player.fuel < game.player.maxFuel);
 });

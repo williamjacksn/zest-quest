@@ -44,7 +44,7 @@ export function reachableSurfaces(world) {
           coyote: 0.11,
           dash: 0,
           dashCd: 0,
-          fuel: 1.4,
+          fuel: template.player.maxFuel,
           bounceBoost: 0,
           boostX: 0,
         };

@@ -35,7 +35,7 @@ export function drawShipInterior(r, game, dt) {
     box(x + 3, 472, 88, 18, '#1c2e40');
     for (const y of [142, 460]) box(x + 8, y, 3, 3, '#6d8a8f');
   }
-  for (const x of [310, 710, 1110]) {
+  for (let x = 310; x < CABIN.airlock - 150; x += 400) {
     box(x - 94, 182, 188, 132, '#111d30');
     box(x - 88, 188, 176, 120, '#60848b');
     box(x - 81, 195, 162, 106, '#111b31');
@@ -64,7 +64,7 @@ export function drawShipInterior(r, game, dt) {
     box(x + 3, 545, 54, 46, '#203548');
     for (let i = 0; i < 5; i++) box(x + 8 + i * 9, 551, 3, 29, '#122338');
   }
-  r.text('VES-0457 / THE LITTLE SHIP', 765, 165, '#a7c5c5', 12);
+  r.text('VES-0457 / THE LITTLE SHIP', CABIN.width / 2, 165, '#a7c5c5', 12);
   // The bridge console and storage make the workshop feel lived in.
   box(58, 414, 80, 92, '#142638');
   box(63, 418, 70, 46, '#577d85');

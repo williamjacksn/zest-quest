@@ -52,7 +52,7 @@ for (const [w, h, label] of [
     await writeFile(`${directory}/landing-${phase}-${label}.png`, exportFrame());
   }
   renderer.reduced = true;
-  for (const world of [6, 7]) {
+  for (const world of [1, 6, 7]) {
     const game = new Game({ seed: 457 });
     game.world = world;
     game.loadWorld();
@@ -62,6 +62,7 @@ for (const [w, h, label] of [
   }
   for (const [name, x, installed] of [
     ['workshop', 400, false],
+    ['thruster', SHIP_STATIONS.find((station) => station.upgrade === 'thrust').x - 45, false],
     ['guidance', 800, true],
     ['airlock', CABIN.airlock - 60, true],
   ]) {
