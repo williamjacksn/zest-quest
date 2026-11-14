@@ -798,7 +798,8 @@ function chapter(index, variant) {
     checkpoints,
     enemies,
     zones,
-    signs: [{ x: 100, y: index === 6 ? 250 : 520, text: sign }],
+    // Introduce this guide in the first chapter only; the later chapter repeats it.
+    signs: variant ? [] : [{ x: 100, y: index === 6 ? 250 : 520, text: sign }],
   };
 }
 
