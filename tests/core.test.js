@@ -285,7 +285,7 @@ test('underwater controls swim and currents push without directional input', () 
 
 test('thrust works where permitted, consumes fuel, caps ascent, and recharges on landing', () => {
   for (let world = 0; world < WORLDS.length; world++) {
-    if (world === 1 || world === 6) continue;
+    if ([1, 4, 6, 8].includes(world)) continue;
     const g = fixture(world);
     assert.ok(g.thrustAvailable);
     g.step(1 / 60, { jump: true, jumpHeld: true });
@@ -306,13 +306,14 @@ test('thrust works where permitted, consumes fuel, caps ascent, and recharges on
   }
 });
 
-test('levels two and seven disable thrust through recovery and retries; the next planet restores it', () => {
-  for (const world of [1, 6]) {
-    const g = fixture(world),
-      message =
-        world === 1
-          ? 'Your thruster got hit by a laser. It will self repair soon.'
-          : 'Your thruster got wet, it no longer works.';
+test('all no-thruster levels stay disabled through recovery and retries; later planets restore it', () => {
+  for (const [world, message] of [
+    [1, 'Your thruster got hit by a laser. It will self repair soon.'],
+    [4, 'There is jelly stuck in your thrusters. It will evaporate soon.'],
+    [6, 'Your thruster got wet, it no longer works.'],
+    [8, 'The Rootheart has jammed your thrusters. Little legs, big finale!'],
+  ]) {
+    const g = fixture(world);
     assert.equal(g.thrustAvailable, false);
     assert.equal(g.level.arrivalMessage, message);
     assert.equal(g.level.signs.filter((sign) => sign.text === message).length, 1);
@@ -329,6 +330,11 @@ test('levels two and seven disable thrust through recovery and retries; the next
     assert.equal(g.level.arrivalMessage, message);
     g.shipReady = true;
     g.completeWorld();
+    if (world === WORLDS.length - 1) {
+      assert.equal(g.state, 'won');
+      assert.equal(g.ship, null);
+      continue;
+    }
     g.player.x = SHIP_STATIONS[0].x;
     g.chooseUpgrade('rapid');
     g.player.x = CABIN.airlock;

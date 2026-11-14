@@ -206,6 +206,8 @@ const LEVELS = [
   },
   {
     width: 4650,
+    thrustDisabled: true,
+    arrivalMessage: 'There is jelly stuck in your thrusters. It will evaporate soon.',
     start: { x: 100, y: 594 },
     exit: { x: 4500, y: 576 },
     platforms: [
@@ -394,6 +396,8 @@ const LEVELS = [
   },
   {
     width: 5650,
+    thrustDisabled: true,
+    arrivalMessage: 'The Rootheart has jammed your thrusters. Little legs, big finale!',
     start: { x: 100, y: 594 },
     exit: { x: 5480, y: 576 },
     platforms: [

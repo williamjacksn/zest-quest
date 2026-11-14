@@ -316,6 +316,13 @@ test('loss, retry, victory, high score, and return to title have usable exits', 
 });
 
 test('stage tracks survive boss events and jukebox browsing; every cabin plays Orange You Glad', () => {
+  const notices = {
+    1: 'Your thruster got hit by a laser. It will self repair soon.',
+    4: 'There is jelly stuck in your thrusters. It will evaporate soon.',
+    6: 'Your thruster got wet, it no longer works.',
+    7: 'Your thruster dried off!',
+    8: 'The Rootheart has jammed your thrusters. Little legs, big finale!',
+  };
   $('launch-button').click();
   $('skip-landing').click();
   frames();
@@ -323,19 +330,12 @@ test('stage tracks survive boss events and jukebox browsing; every cabin plays O
     const game = window.__zest.game;
     assert.equal(game.world, world);
     assert.equal(window.__zest.audio.index, world + 1);
-    if ([1, 6, 7].includes(world)) {
+    if (notices[world]) {
       assert.ok(visible('toast'));
-      assert.equal(
-        $('toast').textContent,
-        world === 1
-          ? 'Your thruster got hit by a laser. It will self repair soon.'
-          : world === 6
-            ? 'Your thruster got wet, it no longer works.'
-            : 'Your thruster dried off!',
-      );
+      assert.equal($('toast').textContent, notices[world]);
     }
     frames(6);
-    if (world === 1) assert.equal($('jump-status').textContent, 'THRUSTER OFFLINE');
+    if ([1, 4, 8].includes(world)) assert.equal($('jump-status').textContent, 'THRUSTER OFFLINE');
     else if (world === 6) assert.equal($('jump-status').textContent, 'THRUSTER WET');
     else assert.match($('jump-status').textContent, /^FUEL \d+%$/);
     window.__zest.event('boss');

@@ -52,7 +52,7 @@ for (const [w, h, label] of [
     await writeFile(`${directory}/landing-${phase}-${label}.png`, exportFrame());
   }
   renderer.reduced = true;
-  for (const world of [1, 6, 7]) {
+  for (const world of [1, 4, 6, 7, 8]) {
     const game = new Game({ seed: 457 });
     game.world = world;
     game.loadWorld();
