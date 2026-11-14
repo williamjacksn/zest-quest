@@ -58,7 +58,6 @@ export const WORLDS = [
     dark: '#11182f',
     sky: '#202541',
     gravity: 950,
-    jet: true,
     mechanic: 'Hold jump to burn jet fuel. Land to refill.',
     debrief: 'Thrusters stable. The Juicy Way is wide open.',
     subtitle: 'A leap into the unknown.',

@@ -77,7 +77,7 @@ export function reachableSurfaces(world) {
           if (dashAt !== null && frame === Math.round(dashAt * 60)) g.dash(direction);
           const dx = endX - p.x;
           const x = Math.abs(dx) < 12 ? 0 : Math.sign(dx);
-          const jumpHeld = !WORLDS[world].jet || p.y > to.y - 100;
+          const jumpHeld = p.y > to.y - 100;
           g.movePlayer(1 / 120, { x, jumpHeld });
           g.movePlayer(1 / 120, { x, jumpHeld });
           for (const f of g.level.platforms) f.dx = f.dy = 0;

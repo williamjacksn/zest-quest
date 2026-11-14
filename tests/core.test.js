@@ -112,7 +112,7 @@ test('double jump is available once in air, and landing refills it', () => {
   assert.equal(g.player.airJumps, 0);
   frames(g, 5, { jumpHeld: true });
   const before = g.player.vy;
-  g.step(1 / 60, { jump: true, jumpHeld: true });
+  g.step(1 / 60, { jump: true });
   assert.ok(g.player.vy > before);
   frames(g, 100);
   assert.ok(g.player.grounded);
@@ -143,7 +143,7 @@ test('one-way ledges permit upward passage, catch landings, and allow dropping t
   g.step(1 / 60, { jump: true, jumpHeld: true });
   frames(g, 25, { jumpHeld: true });
   assert.ok(g.player.y < 494);
-  frames(g, 35);
+  for (let i = 0; i < 120 && !g.player.grounded; i++) frames(g, 1);
   assert.equal(g.player.y, 494);
   assert.equal(g.player.onPlatform, 1);
   g.step(1 / 60, { down: true });
@@ -276,17 +276,32 @@ test('underwater controls swim and currents push without directional input', () 
   assert.ok(g.player.y < 380);
   assert.ok(g.player.x > 145);
   assert.ok(g.player.inWater);
+  assert.equal(g.player.fuel, 1.4, 'swimming does not consume jet fuel');
+  g.level.water = null;
+  frames(g, 2, { jumpHeld: true });
+  assert.equal(g.player.inWater, false);
+  assert.ok(g.player.fuel < 1.4, 'thrust is available outside the water in Vitamin Sea');
 });
 
-test('jet thrust consumes fuel, caps ascent, and ground contact refills it', () => {
-  const g = fixture(2);
-  g.step(1 / 60, { jump: true, jumpHeld: true });
-  frames(g, 35, { jumpHeld: true });
-  assert.ok(g.player.fuel < 1);
-  assert.ok(g.player.y >= 30);
-  Object.assign(g.player, { x: 100, y: 599, vy: 0, grounded: true, onPlatform: 0, fuel: 0 });
-  frames(g, 20);
-  assert.ok(g.player.fuel > 0.8);
+test('thrust works in all nine worlds, consumes fuel, caps ascent, and recharges on landing', () => {
+  for (let world = 0; world < WORLDS.length; world++) {
+    const g = fixture(world);
+    g.step(1 / 60, { jump: true, jumpHeld: true });
+    frames(g, 35, { jumpHeld: true });
+    assert.ok(g.player.fuel < 1, `thrust burns fuel in ${WORLDS[world].name}`);
+    assert.ok(g.player.y >= 30);
+    frames(g, 60, { jumpHeld: true });
+    assert.equal(g.player.fuel, 0);
+    assert.ok(g.player.y >= 30);
+    Object.assign(g.player, { y: 400, vy: 0, grounded: false, onPlatform: null });
+    g.step(1 / 60, { jumpHeld: true });
+    assert.ok(g.player.vy > 0, 'an empty tank cannot keep the bot aloft');
+    Object.assign(g.player, { x: 100, y: 599, vy: 0, grounded: true, onPlatform: 0 });
+    frames(g, 20);
+    assert.ok(g.player.fuel > 0.8);
+    frames(g, 20);
+    assert.equal(g.player.fuel, 1.4);
+  }
 });
 
 test('conveyors carry a standing player and retain momentum during a jump', () => {

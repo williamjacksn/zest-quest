@@ -479,7 +479,7 @@ export class Game {
         p.vy = clamp(p.vy, -240, 270);
       } else {
         p.vy += w.gravity * dt;
-        if (w.jet && input.jumpHeld && !p.grounded && p.fuel > 0) {
+        if (input.jumpHeld && !p.grounded && p.fuel > 0) {
           p.vy -= 2100 * dt;
           p.fuel = Math.max(0, p.fuel - dt);
           this.burst(p.x, p.y + 23, '#ffd18b', 1, 70);

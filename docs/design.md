@@ -26,7 +26,7 @@ The game now uses nine authored side-scrolling stages instead of repeated overhe
 
 Horizontal acceleration and air control make landings adjustable. Jump release shortens ordinary arcs. A second press grants one air jump, while a small coyote-time window allows jumping just after leaving an edge. The input buffer catches slightly early landing jumps. An air dash briefly suspends gravity and protects against enemy/environment damage; physical walls and asteroids still stop it. Physics runs in substeps no larger than 1/120 second to avoid tunneling through thin terrain.
 
-Raised ledges are one-way, and down drops through them. Moving platforms carry grounded passengers. Jelly launches preserve their height without requiring jump to remain held. A small ring beneath the robot signals that an air jump remains, and Citric Propulsion adds a fuel meter.
+Raised ledges are one-way, and down drops through them. Moving platforms carry grounded passengers. Jelly launches preserve their height without requiring jump to remain held. A small ring beneath the robot signals that an air jump remains. Holding jump activates jet thrust in every world, using the same limited fuel supply and ground recharge. The HUD and the meter beneath Vessy show remaining fuel on every planet; underwater controls continue to swim without burning jet fuel.
 
 Every stage has two additional authored chapters, each with a new core, themed obstacles, enemies, and recovery beacons. Routes are 3,200 world units longer, with five cores spread from the opening to the final approach. Existing gaps retain their original widths; the new chapters add jumps and encounters instead of stretching the geometry. The final boss and ship move to the new end of their route.
 

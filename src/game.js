@@ -163,7 +163,7 @@ function event(kind, data) {
     show('landing-cutscene', false);
     show('game-hud');
     toast(
-      `Run, double-jump, dash. Collect ${game.nodes.length} seed cores and reach the ship. Your blaster fires automatically.`,
+      `Run, double-jump, dash. Hold jump to thrust; land to refill fuel. Collect ${game.nodes.length} seed cores and reach the ship. Your blaster fires automatically.`,
       7,
     );
     $('pause-button').focus({ preventScroll: true });
@@ -628,13 +628,7 @@ function hud() {
   $('pulse-fill').style.width = `${100 * (1 - p.pulseCd / 6)}%`;
   $('jump-status').textContent = p.inWater
     ? 'HOLD TO SWIM'
-    : WORLDS[game.world].jet
-      ? `FUEL ${Math.round((p.fuel / 1.4) * 100)}%`
-      : p.grounded
-        ? 'DOUBLE JUMP'
-        : p.airJumps
-          ? 'AIR JUMP READY'
-          : 'LAND TO REFILL';
+    : `FUEL ${Math.round((p.fuel / 1.4) * 100)}%`;
   $('route-progress-fill').style.width = `${(100 * p.x) / game.level.width}%`;
   const boss = game.enemies.find((e) => e.type === 'boss');
   show('boss-hud', !!boss);

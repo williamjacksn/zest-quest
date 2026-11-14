@@ -20,7 +20,7 @@ The first level opens with Vessy’s ship landing on Planet Grapefruit, its hatc
 | ----------------- | ----------------------------------------------------------------------- |
 | A/D or left/right | Run                                                                     |
 | Space, W, or up   | Jump; press again for one air jump                                      |
-| Hold jump         | Longer jump; jet thrust in Citric Propulsion; swim up underwater        |
+| Hold jump         | Jet thrust on every planet; land to refill fuel; swim up underwater     |
 | Shift or X        | Air dash, with brief immunity                                           |
 | S or down         | Drop through a raised ledge                                             |
 | E                 | Pulse nearby enemies; interact with objects and the Airlock aboard ship |

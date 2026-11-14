@@ -137,6 +137,7 @@ test('launch, movement, dash, pulse, pause, focus trap, and resume work together
   frames(450);
   assert.ok(visible('game-hud'));
   assert.equal($('sample-pips').children.length, 5);
+  assert.match($('jump-status').textContent, /^FUEL \d+%$/);
   assert.ok(!visible('title-screen'));
   const game = window.__zest.game;
   const start = game.player.x;

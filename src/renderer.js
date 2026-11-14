@@ -367,7 +367,7 @@ export class Renderer {
       this.circle(p.x, p.y + 35, 3, world.color);
       this.circle(p.x, p.y + 35, 7, null, world.color + '44');
     }
-    if (world.jet) {
+    if (!landing && !p.inWater) {
       this.box(p.x - 22, p.y + 41, 44, 3, '#ffffff22', 1);
       this.box(p.x - 22, p.y + 41, (44 * p.fuel) / 1.4, 3, '#ffd18b', 1);
     }
