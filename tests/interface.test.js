@@ -330,8 +330,8 @@ test('stage tracks survive boss events and jukebox browsing; every cabin plays O
         world === 1
           ? 'Your thruster got hit by a laser. It will self repair soon.'
           : world === 6
-            ? 'your thruster got wet, it no longer works'
-            : 'your thruster dried off!',
+            ? 'Your thruster got wet, it no longer works.'
+            : 'Your thruster dried off!',
       );
     }
     frames(6);

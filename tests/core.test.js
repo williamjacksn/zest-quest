@@ -312,7 +312,7 @@ test('levels two and seven disable thrust through recovery and retries; the next
       message =
         world === 1
           ? 'Your thruster got hit by a laser. It will self repair soon.'
-          : 'your thruster got wet, it no longer works';
+          : 'Your thruster got wet, it no longer works.';
     assert.equal(g.thrustAvailable, false);
     assert.equal(g.level.arrivalMessage, message);
     assert.equal(g.level.signs.filter((sign) => sign.text === message).length, 1);
@@ -337,7 +337,7 @@ test('levels two and seven disable thrust through recovery and retries; the next
     assert.equal(g.world, world + 1);
     assert.equal(g.thrustAvailable, true);
     if (world === 6) {
-      const dry = 'your thruster dried off!';
+      const dry = 'Your thruster dried off!';
       assert.equal(g.level.arrivalMessage, dry);
       assert.equal(g.level.signs.filter((sign) => sign.text === dry).length, 1);
       assert.ok(g.level.signs.find((sign) => sign.text === dry).x < 200);

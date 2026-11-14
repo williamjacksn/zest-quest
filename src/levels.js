@@ -343,7 +343,7 @@ const LEVELS = [
       { x: 850, y: 250, text: 'RIDE THE CURRENTS · KEEP CLEAR OF CORAL' },
     ],
     thrusterWet: true,
-    arrivalMessage: 'your thruster got wet, it no longer works',
+    arrivalMessage: 'Your thruster got wet, it no longer works.',
   },
   {
     width: 4950,
@@ -390,7 +390,7 @@ const LEVELS = [
       { x: 150, y: 535, text: 'CONVEYORS CARRY MOMENTUM INTO YOUR JUMPS' },
       { x: 1120, y: 535, text: 'JUICE VENTS HISS BEFORE THEY ERUPT' },
     ],
-    arrivalMessage: 'your thruster dried off!',
+    arrivalMessage: 'Your thruster dried off!',
   },
   {
     width: 5650,
