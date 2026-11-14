@@ -1,0 +1,21 @@
+{
+  "name": "zest-quest",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "A soundtrack-driven botanical space adventure starring VES-0457.",
+  "scripts": {
+    "dev": "node tools/server.mjs",
+    "build": "node tools/build.mjs",
+    "test": "node --test",
+    "render": "node tools/render-scenes.mjs",
+    "routes": "node tools/route-check.mjs",
+    "analyze": "node tools/analyze-soundtrack.mjs"
+  },
+  "devDependencies": {
+    "@napi-rs/canvas": "^1.1.1",
+    "linkedom": "^0.18.15",
+    "mpg123-decoder": "^1.0.3",
+    "prettier": "^3.10.1"
+  }
+}

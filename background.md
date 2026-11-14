@@ -1,0 +1,5 @@
+# Zest Quest: Background Information
+
+Planet Grapefruit is being consumed by an alien plague. Hope emerges from an unexpected source: the 87 operational Vesicle Extraction Specialist robots assigned to Sector 04 (officially designated VES-0400 through VES-0499, nicknamed Vessy). Finding their sector riddled with plague roots, the robots propose a plan to forestall their own obsolescence. They are already equipped with high-tech citric acid sensors, self-sufficient AI systems, and a variety of tools for collecting and storing samples. If outfitted for space travel, they could search the galaxy for other planets on which their organic creators could survive, abandoning their rotting world for a new one.
+
+The plan is set in motion; robots are converted and launched as quickly as resources allow. By the time VES-0457 is ready to go, data is already starting to trickle home from the first few bots. Encouraged by the news and determined to find a viable planet, VES-0457 begins its own journey.

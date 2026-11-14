@@ -1,0 +1,152 @@
+[
+  {
+    "track": 1,
+    "title": "Welcome to the Juicy Way",
+    "seconds": 188.6,
+    "sampleRate": 44100,
+    "rms": 0.2319,
+    "peak": 1.0774,
+    "zeroCrossingsPerSecond": 2505,
+    "pulseCandidates": [
+      60,
+      120,
+      79
+    ],
+    "decodeErrors": 0
+  },
+  {
+    "track": 2,
+    "title": "The Fuzzy Plague of Planet Grapefruit",
+    "seconds": 180.86,
+    "sampleRate": 44100,
+    "rms": 0.1742,
+    "peak": 1.0051,
+    "zeroCrossingsPerSecond": 2320,
+    "pulseCandidates": [
+      70,
+      143,
+      94
+    ],
+    "decodeErrors": 0
+  },
+  {
+    "track": 3,
+    "title": "Vessy the Pulp Extraction Bot",
+    "seconds": 225.48,
+    "sampleRate": 44100,
+    "rms": 0.2058,
+    "peak": 1.039,
+    "zeroCrossingsPerSecond": 3078,
+    "pulseCandidates": [
+      158,
+      63,
+      79
+    ],
+    "decodeErrors": 0
+  },
+  {
+    "track": 4,
+    "title": "Citric Propulsion",
+    "seconds": 187.71,
+    "sampleRate": 44100,
+    "rms": 0.2536,
+    "peak": 1.0657,
+    "zeroCrossingsPerSecond": 3226,
+    "pulseCandidates": [
+      70,
+      143,
+      136
+    ],
+    "decodeErrors": 0
+  },
+  {
+    "track": 5,
+    "title": "Among the Starfruit",
+    "seconds": 213.43,
+    "sampleRate": 44100,
+    "rms": 0.2467,
+    "peak": 1.0794,
+    "zeroCrossingsPerSecond": 2527,
+    "pulseCandidates": [
+      94,
+      70,
+      143
+    ],
+    "decodeErrors": 0
+  },
+  {
+    "track": 6,
+    "title": "Globular Jelly Cluster",
+    "seconds": 196.12,
+    "sampleRate": 44100,
+    "rms": 0.2466,
+    "peak": 1.0999,
+    "zeroCrossingsPerSecond": 3785,
+    "pulseCandidates": [
+      94,
+      70,
+      143
+    ],
+    "decodeErrors": 0
+  },
+  {
+    "track": 7,
+    "title": "The Avocado Constant",
+    "seconds": 199.23,
+    "sampleRate": 44100,
+    "rms": 0.272,
+    "peak": 1.0623,
+    "zeroCrossingsPerSecond": 3343,
+    "pulseCandidates": [
+      70,
+      94,
+      143
+    ],
+    "decodeErrors": 0
+  },
+  {
+    "track": 8,
+    "title": "Vitamin Sea",
+    "seconds": 176.45,
+    "sampleRate": 44100,
+    "rms": 0.216,
+    "peak": 1.1149,
+    "zeroCrossingsPerSecond": 2734,
+    "pulseCandidates": [
+      65,
+      130,
+      86
+    ],
+    "decodeErrors": 0
+  },
+  {
+    "track": 9,
+    "title": "Orange You Glad",
+    "seconds": 188.18,
+    "sampleRate": 44100,
+    "rms": 0.2313,
+    "peak": 1.0645,
+    "zeroCrossingsPerSecond": 2678,
+    "pulseCandidates": [
+      73,
+      111,
+      60
+    ],
+    "decodeErrors": 0
+  },
+  {
+    "track": 10,
+    "title": "Robots Change",
+    "seconds": 224.04,
+    "sampleRate": 44100,
+    "rms": 0.1979,
+    "peak": 1.053,
+    "zeroCrossingsPerSecond": 2732,
+    "pulseCandidates": [
+      158,
+      120,
+      68
+    ],
+    "decodeErrors": 0
+  }
+]

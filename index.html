@@ -1,0 +1,379 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="theme-color" content="#101621" />
+    <meta
+      name="description"
+      content="Run, double-jump, and dash across nine alien worlds in a soundtrack-driven side-scrolling adventure."
+    />
+    <title>Zest Quest — A little hope goes a long way</title>
+    <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div id="app">
+      <header class="topbar">
+        <a class="brand" href="./" aria-label="Zest Quest home"
+          ><svg viewBox="0 0 32 32" aria-hidden="true">
+            <path d="M5 21A14 14 0 0 1 25 4L28 7 8 27Z" fill="currentColor" />
+            <path d="m10 21 11-11M9 15l7-5m0 13 6-7" stroke="#101621" stroke-width="2" /></svg
+          ><span>ZEST QUEST<span class="brand-sub">VESICLE EXPLORATION PROGRAM</span></span></a
+        >
+        <div class="header-center">
+          <span class="live-dot"></span><span id="header-status">SECTOR 04 · SIGNAL ONLINE</span>
+        </div>
+        <div class="header-actions">
+          <button id="soundtrack-button" class="text-button" title="Open original soundtrack">
+            <span class="equalizer"><i></i><i></i><i></i><i></i></span
+            ><span class="desktop-label">Soundtrack</span>
+          </button>
+          <button
+            id="mute-button"
+            class="icon-button"
+            aria-label="Mute audio"
+            title="Mute audio (M)"
+          >
+            ♪
+          </button>
+          <button
+            id="pause-button"
+            class="icon-button hidden"
+            aria-label="Pause game"
+            title="Pause (Esc)"
+          >
+            Ⅱ
+          </button>
+        </div>
+      </header>
+
+      <main id="stage">
+        <canvas
+          id="game-canvas"
+          aria-label="Zest Quest platform game. A/D or left/right to run. Space, W, or up to jump; press again to double-jump. Shift or X to dash, E to pulse."
+        ></canvas>
+        <div class="vignette"></div>
+        <section id="landing-cutscene" class="landing-cutscene hidden" aria-label="First landing">
+          <div class="landing-heading">
+            <div>
+              <span class="eyebrow">01 / THE JOURNEY BEGINS</span>
+              <strong>Planet Grapefruit</strong>
+            </div>
+            <button
+              id="skip-landing"
+              type="button"
+              aria-label="Skip intro"
+              title="Skip intro (Space / Enter)"
+            >
+              <canvas id="skip-landing-label" width="116" height="20" aria-hidden="true"
+                >SKIP INTRO</canvas
+              >
+              <svg viewBox="0 0 16 14" aria-hidden="true" shape-rendering="crispEdges">
+                <path
+                  d="M1 1h2v2h2v2h2v4H5v2H3v2H1v-2h2V9h2V5H3V3H1zm6 0h2v2h2v2h2v4h-2v2H9v2H7v-2h2V9h2V5H9V3H7zm7 0h2v12h-2z"
+                  fill="currentColor"
+                />
+              </svg>
+            </button>
+          </div>
+          <div class="landing-footer">
+            <p id="landing-caption" role="status"></p>
+          </div>
+        </section>
+
+        <section id="title-screen" class="title-screen">
+          <div class="title-copy">
+            <div class="eyebrow">
+              <span class="tiny-star">✳</span> A SIDE-SCROLLING SPACE ADVENTURE
+            </div>
+            <h1>A little <span>zest.</span><br />A lot of <em>universe.</em></h1>
+            <p class="intro">
+              Home is fading. Hope is out there.<br />You’re Vessy, a little robot on a very big
+              mission<br class="wide-break" />
+              to find a new world for the people of Planet Grapefruit.
+            </p>
+            <div class="launch-row">
+              <button id="launch-button" class="primary-button">
+                Launch expedition <span>↗</span></button
+              ><span class="run-length">9 worlds. 10 tracks.<br />One little leap for home.</span>
+            </div>
+            <div class="title-controls">
+              <span><kbd>A</kbd><kbd>D</kbd> run</span><span><kbd>SPACE</kbd> double-jump</span
+              ><span><kbd>SHIFT</kbd> dash</span><span><kbd>E</kbd> pulse</span>
+            </div>
+            <div class="auto-note">
+              Your blaster handles the shooting. You handle the adventure.
+            </div>
+          </div>
+          <div class="bot-caption">
+            <span class="caption-line"></span><strong>VES–0457</strong
+            ><span>Small bot. Big potential.</span>
+          </div>
+          <div class="title-bottom">
+            <span>01 — THE JOURNEY STARTS WITH YOU</span
+            ><button id="how-button" class="text-button">Mission briefing <span>↗</span></button>
+          </div>
+        </section>
+
+        <div id="game-hud" class="game-hud hidden">
+          <section id="ship-hud" class="ship-hud hidden" aria-label="Vessy's ship workshop">
+            <div class="ship-heading">
+              <div class="eyebrow">VES–0457 / BETWEEN WORLDS</div>
+              <h2>A little room to recharge.</h2>
+              <p id="ship-destination"></p>
+              <p id="ship-status" role="status"></p>
+            </div>
+            <div class="ship-interaction">
+              <button id="ship-interact" type="button">
+                <kbd>E</kbd> <span id="ship-prompt"></span>
+              </button>
+              <small>A / D or ← / → to walk · E to interact</small>
+            </div>
+          </section>
+          <div class="mission-hud">
+            <div class="eyebrow" id="world-code"></div>
+            <h2 id="world-name"></h2>
+            <p id="objective"></p>
+            <div id="sample-pips" class="sample-pips"></div>
+          </div>
+          <div class="status-hud">
+            <div class="hull-label">
+              <span>VES–0457 / HULL</span><strong id="hull-value">100%</strong>
+            </div>
+            <div class="hull-track"><div id="hull-fill"></div></div>
+            <div class="score-row">
+              <span id="score-value">000000</span><span id="timer-value">00:00</span>
+            </div>
+            <canvas id="minimap" width="146" height="48" aria-label="Side-view level map"></canvas>
+            <div class="route-progress"><i id="route-progress-fill"></i></div>
+          </div>
+          <div id="boss-hud" class="boss-hud hidden">
+            <div>ROOTHEART <span>THE LAST THING BETWEEN US AND HOME</span></div>
+            <div class="boss-track"><div id="boss-fill"></div></div>
+          </div>
+          <div class="ability-bar">
+            <div class="identity-tag">
+              <span class="bot-dot">•ᴗ•</span>
+              <div>VES–0457<small>EXTRACTION SPECIALIST</small></div>
+            </div>
+            <div class="ability" id="jump-ability">
+              <kbd>SPACE</kbd>
+              <div>Double jump<small id="jump-status">AIR JUMP READY</small></div>
+            </div>
+            <div class="ability" id="dash-ability">
+              <kbd>SHIFT</kbd>
+              <div>Citric dash<small id="dash-status">READY</small></div>
+              <div class="cooldown"><i id="dash-fill"></i></div>
+            </div>
+            <div class="ability" id="pulse-ability">
+              <kbd>E</kbd>
+              <div>Zest pulse<small id="pulse-status">READY</small></div>
+              <div class="cooldown"><i id="pulse-fill"></i></div>
+            </div>
+            <div class="autofire-indicator"><span class="live-dot"></span>AUTO BLASTER</div>
+          </div>
+          <div id="toast" class="toast hidden" role="status"></div>
+          <div id="touch-controls" class="touch-controls">
+            <div id="joystick" aria-label="Run left or right"><div id="joystick-knob"></div></div>
+            <div class="touch-actions">
+              <button id="touch-pulse" aria-label="Zest pulse">PULSE</button
+              ><button id="touch-dash" aria-label="Citric dash">DASH ↗</button>
+              <button
+                id="touch-jump"
+                aria-label="Jump; press again to double-jump; hold to swim or thrust"
+              >
+                JUMP ↑
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div id="overlay" class="overlay hidden">
+          <section
+            id="briefing-panel"
+            class="panel hidden"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="briefing-title"
+          >
+            <div class="eyebrow">TRANSMISSION / PLANET GRAPEFRUIT</div>
+            <h2 id="briefing-title">87 robots.<br />A world of hope.</h2>
+            <p>
+              The Fuzzy Plague is consuming your home. Of the 87 operational Vessy robots in Sector
+              04, you’re number 457. Your creators gave you a spaceship, a citric scanner, and a
+              mission: find somewhere they can live.
+            </p>
+            <div class="briefing-steps">
+              <div>
+                <b>01</b
+                ><span
+                  ><strong>Run, jump, then jump again</strong>Space / W / ↑ jumps. Press again in
+                  midair for a double jump. Shift / X dashes. S / ↓ drops through ledges.</span
+                >
+              </div>
+              <div>
+                <b>02</b
+                ><span
+                  ><strong>Learn each world’s tricks</strong>Ride lifts, bounce on jelly, swim
+                  through currents, and time the lasers. Your blaster fires automatically; E pulses
+                  nearby enemies away.</span
+                >
+              </div>
+              <div>
+                <b>03</b
+                ><span
+                  ><strong>Bring it home</strong>Touch all five glowing seed cores and reach the
+                  ship at the far end. Beacons save your place after a fall. Between worlds, explore
+                  the ship and press E at an object to choose an upgrade. Follow the yellow arrows
+                  to the Airlock when you’re ready.</span
+                >
+              </div>
+            </div>
+            <button id="briefing-close" class="primary-button">
+              Got it. Let’s find home. <span>↗</span>
+            </button>
+          </section>
+          <section
+            id="pause-panel"
+            class="panel compact hidden"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="pause-title"
+          >
+            <div class="eyebrow">SIGNAL ON STANDBY</div>
+            <h2 id="pause-title">Take a breather.</h2>
+            <p>Even little robots need a moment.</p>
+            <div class="settings">
+              <label
+                >Music
+                <input
+                  id="music-volume"
+                  aria-label="Music volume"
+                  type="range"
+                  min="0"
+                  max="100"
+                  value="60" /></label
+              ><label
+                >Sound effects
+                <input
+                  id="fx-volume"
+                  aria-label="Sound effects volume"
+                  type="range"
+                  min="0"
+                  max="100"
+                  value="55" /></label
+              ><label
+                ><span>Gentle mode<small>Half damage. Same adventure.</small></span
+                ><input type="checkbox" id="assist-toggle" /></label
+              ><label
+                ><span>Reduced motion</span><input type="checkbox" id="motion-toggle"
+              /></label>
+            </div>
+            <button id="resume-button" class="primary-button">
+              Back to the stars <span>↗</span></button
+            ><button id="quit-button" class="secondary-button">End expedition</button>
+          </section>
+          <section
+            id="upgrade-panel"
+            class="panel upgrade-panel hidden"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="upgrade-title"
+          >
+            <div class="eyebrow" id="upgrade-eyebrow">SEED CORES SECURED</div>
+            <h2 id="upgrade-title">A little extra zest.</h2>
+            <p id="debrief-text"></p>
+            <div id="route-map" class="route-map" aria-label="Expedition route"></div>
+            <div class="next-world-label" id="next-world-label"></div>
+            <div id="upgrade-choices" class="upgrade-choices single-upgrade"></div>
+            <button id="upgrade-cancel" class="secondary-button">Keep exploring</button>
+            <div class="panel-footnote">
+              One upgrade per stop. Then follow the yellow arrows to the Airlock.
+            </div>
+          </section>
+          <section
+            id="travel-panel"
+            class="panel compact travel-panel hidden"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="travel-title"
+          >
+            <div class="eyebrow">THE JUICY WAY / NEXT LANDING</div>
+            <div class="travel-orbit"><span>✳</span></div>
+            <h2 id="travel-title">Next stop.</h2>
+            <p id="travel-destination"></p>
+            <div class="travel-progress"><i></i></div>
+            <button id="land-button" class="secondary-button">Land now ↗</button>
+          </section>
+          <section
+            id="end-panel"
+            class="panel end-panel hidden"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="end-title"
+          >
+            <div class="eyebrow" id="end-eyebrow"></div>
+            <h2 id="end-title"></h2>
+            <p id="end-story"></p>
+            <div class="end-stats">
+              <div><strong id="end-score"></strong><span>MISSION SCORE</span></div>
+              <div><strong id="end-samples"></strong><span>SEED CORES</span></div>
+              <div><strong id="end-time"></strong><span>FLIGHT TIME</span></div>
+            </div>
+            <p id="best-score" class="record-label"></p>
+            <button id="retry-button" class="primary-button">
+              Another little adventure <span>↗</span></button
+            ><button id="home-button" class="secondary-button">Return to title</button>
+          </section>
+        </div>
+      </main>
+
+      <footer class="footer">
+        <div class="now-playing">
+          <span class="record-icon">◉</span>
+          <div>
+            <span class="footer-label" id="music-label">ORIGINAL SOUNDTRACK</span
+            ><button id="now-playing-button">Lemonectric <span>↗</span></button>
+          </div>
+        </div>
+        <div id="footer-center">A LITTLE HOPE GOES A LONG WAY.</div>
+        <div class="footer-right">
+          <span id="best-label">VES–0457</span><span class="footer-star">✳</span>
+        </div>
+      </footer>
+    </div>
+    <aside
+      id="soundtrack-drawer"
+      class="soundtrack-drawer hidden"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="soundtrack-title"
+    >
+      <button id="close-soundtrack" class="icon-button drawer-close" aria-label="Close soundtrack">
+        ×
+      </button>
+      <div class="eyebrow">THE MUSIC THAT STARTED IT ALL</div>
+      <div class="album-heading">
+        <img
+          src="Lemonectric%20-%20Zest%20Quest/cover.png"
+          alt="Original Zest Quest album cover: a pixel art grapefruit planet in space"
+        />
+        <div>
+          <h2 id="soundtrack-title">Zest Quest</h2>
+          <p>Lemonectric</p>
+          <span>10 TRACKS · ORIGINAL SOUNDTRACK</span>
+        </div>
+      </div>
+      <p class="drawer-description">
+        A galaxy imagined in sound. Every chapter of your expedition is paired with a track from
+        this album.
+      </p>
+      <div id="track-list" class="track-list"></div>
+      <div class="drawer-footnote">
+        Track 10 with Phonetic Hero.<br />Original recordings included with this project.
+      </div>
+    </aside>
+    <script type="module" src="src/game.js"></script>
+  </body>
+</html>
