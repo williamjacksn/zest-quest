@@ -346,9 +346,15 @@ p.intro {
 }
 .launch-row {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   gap: 25px;
   margin-top: 32px;
+}
+#launch-button-label {
+  width: 200px;
+  height: 20px;
+  image-rendering: pixelated;
 }
 .primary-button {
   display: flex;
@@ -431,7 +437,7 @@ kbd {
   color: #68758c;
 }
 .title-bottom .text-button {
-  font-size: 10px;
+  font-size: 16px;
   flex-shrink: 0;
 }
 .bot-caption {
@@ -1210,6 +1216,10 @@ kbd {
     padding: 17px 20px;
     gap: 24px;
   }
+  #launch-button {
+    padding-inline: 12px;
+    gap: 12px;
+  }
   .run-length {
     font-size: 7px;
   }
@@ -1241,7 +1251,7 @@ kbd {
     letter-spacing: 0.7px;
   }
   .title-bottom .text-button {
-    font-size: 8px;
+    font-size: 13px;
   }
   .footer {
     height: 65px;

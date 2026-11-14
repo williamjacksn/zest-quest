@@ -24,6 +24,13 @@ const save = (key, value) => {
   }
 };
 const renderer = new Renderer($('game-canvas'));
+new PixelArt($('launch-button-label').getContext('2d'), renderer.art.make).label(
+  'LAUNCH EXPEDITION',
+  100,
+  16,
+  '#142335',
+  14,
+);
 new PixelArt($('skip-landing-label').getContext('2d'), renderer.art.make).label(
   'SKIP INTRO',
   58,
