@@ -52,6 +52,14 @@ for (const [w, h, label] of [
     await writeFile(`${directory}/landing-${phase}-${label}.png`, exportFrame());
   }
   renderer.reduced = true;
+  for (const world of [6, 7]) {
+    const game = new Game({ seed: 457 });
+    game.world = world;
+    game.loadWorld();
+    renderer.snap = true;
+    renderer.game(game, 5, 1 / 60);
+    await writeFile(`${directory}/world-${world + 1}-arrival-${label}.png`, exportFrame());
+  }
   for (const [name, x, installed] of [
     ['workshop', 400, false],
     ['guidance', 800, true],

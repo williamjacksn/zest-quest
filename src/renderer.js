@@ -286,6 +286,35 @@ export class Renderer {
     for (const s of level.signs) {
       if (landing) continue;
       if (Math.abs(s.x - this.camera.x) > half + 150) continue;
+      if (s.text === level.arrivalMessage) {
+        // Bitmap glyphs stay at least two screen pixels wide, even on phones.
+        const maxChars = Math.max(12, Math.min(24, Math.floor((w - 32) / 12))),
+          lines = [];
+        let line = '';
+        for (const word of s.text.split(' ')) {
+          if (line && line.length + word.length + 1 > maxChars) {
+            lines.push(line);
+            line = word;
+          } else line += (line ? ' ' : '') + word;
+        }
+        if (line) lines.push(line);
+        const x = clamp(
+          s.x,
+          this.camera.x - half + 16 / this.zoom,
+          this.camera.x + half - (maxChars * 12 + 16) / this.zoom,
+        );
+        lines.forEach((text, i) =>
+          this.text(
+            text,
+            x,
+            s.y - ((lines.length - i - 1) * 22) / this.zoom,
+            world.color + 'cc',
+            8,
+            'left',
+          ),
+        );
+        continue;
+      }
       this.line(s.x, s.y + 14, s.x, s.y + 34, world.color + '66', 1);
       this.text(s.text, s.x, s.y, world.color + 'cc', 8, 'left');
     }
@@ -367,7 +396,7 @@ export class Renderer {
       this.circle(p.x, p.y + 35, 3, world.color);
       this.circle(p.x, p.y + 35, 7, null, world.color + '44');
     }
-    if (!landing && !p.inWater) {
+    if (!landing && !p.inWater && game.thrustAvailable) {
       this.box(p.x - 22, p.y + 41, 44, 3, '#ffffff22', 1);
       this.box(p.x - 22, p.y + 41, (44 * p.fuel) / 1.4, 3, '#ffd18b', 1);
     }

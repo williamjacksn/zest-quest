@@ -340,6 +340,8 @@ const LEVELS = [
       { x: 160, y: 535, text: 'WATER AHEAD · HOLD JUMP TO SWIM UP' },
       { x: 850, y: 250, text: 'RIDE THE CURRENTS · KEEP CLEAR OF CORAL' },
     ],
+    thrusterWet: true,
+    arrivalMessage: 'your thruster got wet, it no longer works',
   },
   {
     width: 4950,
@@ -386,6 +388,7 @@ const LEVELS = [
       { x: 150, y: 535, text: 'CONVEYORS CARRY MOMENTUM INTO YOUR JUMPS' },
       { x: 1120, y: 535, text: 'JUICE VENTS HISS BEFORE THEY ERUPT' },
     ],
+    arrivalMessage: 'your thruster dried off!',
   },
   {
     width: 5650,
@@ -847,6 +850,12 @@ const EXPEDITIONS = LEVELS.map((original, index) => {
 
 export function createLevel(index) {
   const level = structuredClone(EXPEDITIONS[index]);
+  if (level.arrivalMessage)
+    level.signs.unshift({
+      x: level.start.x,
+      y: level.start.y - 110,
+      text: level.arrivalMessage,
+    });
   level.platforms.forEach((p, i) => {
     p.id = i;
     p.baseX = p.x;

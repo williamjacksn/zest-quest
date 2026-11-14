@@ -108,6 +108,9 @@ export class Game {
     this.level.enemies.forEach((e) => this.spawnEnemy(e.type, e.x, e.y, e.range));
     this.emit('world', WORLDS[this.world]);
   }
+  get thrustAvailable() {
+    return !this.level.thrusterWet;
+  }
   beginLanding() {
     if (this.world !== 0 || this.state !== 'playing' || this.time > 0 || this.landingPlayed)
       return false;
@@ -479,7 +482,7 @@ export class Game {
         p.vy = clamp(p.vy, -240, 270);
       } else {
         p.vy += w.gravity * dt;
-        if (input.jumpHeld && !p.grounded && p.fuel > 0) {
+        if (this.thrustAvailable && input.jumpHeld && !p.grounded && p.fuel > 0) {
           p.vy -= 2100 * dt;
           p.fuel = Math.max(0, p.fuel - dt);
           this.burst(p.x, p.y + 23, '#ffd18b', 1, 70);

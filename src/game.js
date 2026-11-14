@@ -340,7 +340,10 @@ function land() {
   closePanel();
   renderer.snap = true;
   audio.play(WORLDS[game.world].track);
-  toast(`${WORLDS[game.world].name} · ${WORLDS[game.world].mechanic}`, 6);
+  toast(
+    game.level.arrivalMessage || `${WORLDS[game.world].name} · ${WORLDS[game.world].mechanic}`,
+    game.level.arrivalMessage ? 8 : 6,
+  );
   updateWorld();
   if (document.hidden) pause();
 }
@@ -418,7 +421,10 @@ $('retry-button').addEventListener('click', () => {
   audio.duck(false);
   audio.play(WORLDS[game.world].track);
   updateWorld();
-  toast(WORLDS[game.world].mechanic, 5);
+  toast(
+    game.level.arrivalMessage || WORLDS[game.world].mechanic,
+    game.level.arrivalMessage ? 8 : 5,
+  );
 });
 $('home-button').addEventListener('click', home);
 $('pause-button').addEventListener('click', pause);
@@ -628,7 +634,9 @@ function hud() {
   $('pulse-fill').style.width = `${100 * (1 - p.pulseCd / 6)}%`;
   $('jump-status').textContent = p.inWater
     ? 'HOLD TO SWIM'
-    : `FUEL ${Math.round((p.fuel / 1.4) * 100)}%`;
+    : game.thrustAvailable
+      ? `FUEL ${Math.round((p.fuel / 1.4) * 100)}%`
+      : 'THRUSTER WET';
   $('route-progress-fill').style.width = `${(100 * p.x) / game.level.width}%`;
   const boss = game.enemies.find((e) => e.type === 'boss');
   show('boss-hud', !!boss);
