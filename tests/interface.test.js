@@ -328,7 +328,7 @@ test('stage tracks survive boss events and jukebox browsing; every cabin plays O
       assert.equal(
         $('toast').textContent,
         world === 1
-          ? 'thruster offline in this level'
+          ? 'Your thruster got hit by a laser. It will self repair soon.'
           : world === 6
             ? 'your thruster got wet, it no longer works'
             : 'your thruster dried off!',

@@ -311,7 +311,7 @@ test('levels two and seven disable thrust through recovery and retries; the next
     const g = fixture(world),
       message =
         world === 1
-          ? 'thruster offline in this level'
+          ? 'Your thruster got hit by a laser. It will self repair soon.'
           : 'your thruster got wet, it no longer works';
     assert.equal(g.thrustAvailable, false);
     assert.equal(g.level.arrivalMessage, message);
